@@ -5,15 +5,16 @@
 #include <io.h> 
 struct SV
 {
-	char mssv[10];
-	char ten[30];
-	char khoa[30];
+
+	wchar_t mssv[10];
+	wchar_t ten[30];
+	wchar_t khoa[30];
 	int k;
-	char mail[100];
-	char day[10];
-	char hinh[20];
-	char mt[1000];
-	char sth[1000];
+	wchar_t mail[100];
+	wchar_t day[10];
+	wchar_t hinh[20];
+	wchar_t mt[1000];
+	wchar_t sth[1000];
 };
 
 void main()
@@ -22,16 +23,22 @@ void main()
 	_setmode(_fileno(stdin), _O_U16TEXT); //needed for input
 	FILE*fp;
 	FILE *fp1;
-	SV A[10];
-	 _wfopen_s(&fp,L"D:\thongtinsv.csv",L"r, ccs=UTF-8");
-	 _wfopen_s(&fp1, L"D:\print.txt", L"w+, ccs=UTF-8");
-	 if (fp != NULL)
-	 {
-		 fwscanf_s(fp, L"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%f", &A[0].mssv, &A[0].ten, &A[0].khoa, &A[0].k, &A[0].day, &A[0].mail, &A[0].mt, &A[0].sth);
-	 }
-	 fwprintf(fp1,L"%c,%c,%c,%c,%d,%c,%c,%c,%c", A[0].mssv, A[0].ten, A[0].khoa, A[0].k, A[0].day, A[0].mail, A[0].mt, A[0].sth);
-	 fclose(fp);
-	 fclose(fp1);
+	FILE *fp2;
+	SV A;
+	SV b;
+	_wfopen_s(&fp, L"D:\input.txt", L"r, ccs=UTF-8");
+	_wfopen_s(&fp1, L"D:\print.txt", L"w, ccs=UTF-8");
+	_wfopen_s(&fp2, L"d:\doc.txt", L"w,ccs=UTF-8");
+	if (fp != NULL)
+	{
+		fwscanf(fp, L"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%d", &A.mssv, &A.ten, &A.khoa, &A.day, &A.mail, &A.mt, &A.sth,&A.k);
+	}
+	else printf("khong co file");
+
+	fwprintf(fp2, L"%s\n%s\n%s\n%d\n%s\n%s\n%s\n%s", A.mssv, A.ten, A.khoa, A.k, A.day, A.mail, A.mt, A.sth);
+	fclose(fp1);
+	fclose(fp);
+	fclose(fp2);
 	_getch();
-	
+
 }
